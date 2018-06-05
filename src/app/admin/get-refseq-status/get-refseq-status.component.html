@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="card-header">
+    RefSeqDB
+  </div>
+  <div class="card-body">
+
+    <button type="button" class="btn" (click)="checkRefSeqStatus(true)">Check Remote RefSeqDB</button>
+
+    <div class="card mt-1 mb-1" *ngIf="selected.length>0">
+      <div class="card-body">
+        Selected datasets for refresh:
+        <ul>
+          <li *ngFor="let s of selected">
+            <small>{{s.Name}}</small>
+          </li>
+        </ul>
+        <button class="btn btn-primary" type="button" (click)="refreshDB(selected, 'false')">Refresh</button>
+        <button class="btn btn-primary ml-2" type="button" (click)="refreshDB(selected, 'true')">Test</button>
+      </div>
+    </div>
+
+
+    <div *ngIf="refSeqQuery|async;let refSeqQuery">
+
+      <ngx-datatable
+        class="bootstrap"
+        [columnMode]="'flex'"
+        [headerHeight]="30"
+        [footerHeight]="30"
+        [limit]="10"
+        [rowHeight]="'auto'"
+        [sorts]="[{prop: 'Name', dir: 'desc'}]"
+        [selectionType]="'multiClick'"
+        [selected]="selected"
+        (select)='onSelect($event)'
+        [rows]="refSeqQuery.CurrentDB">
+        <ngx-datatable-column name="Name" [flexGrow]="2">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{row.Name}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Local Ver." [flexGrow]="1">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{row.Version}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Remote Ver." [flexGrow]="1">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{refSeqQuery.RemoteDB}}
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #loading>
+  <h6 class="card-subtitle mb-2 text-primary">Processing <i class="fa fa-circle-o-notch fa-spin"></i></h6>
+</ng-template>

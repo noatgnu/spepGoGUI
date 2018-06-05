@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-header">
+    SORF Codons
+  </div>
+  <div class="card-body">
+    <button type="button" class="btn" (click)="checkCodons()">Refresh Codons</button>
+    <div *ngIf="Codons|async;let Codons">
+      <ngx-datatable
+        class="bootstrap"
+        [columnMode]="'flex'"
+        [headerHeight]="30"
+        [footerHeight]="30"
+        [limit]="7"
+        [rowHeight]="'auto'"
+        [sorts]="[{prop: 'id', dir: 'desc'}]"
+        [rows]="Codons">
+        <ngx-datatable-column name="Sequence" [flexGrow]="1">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{row.sequence}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Starting Codon" [flexGrow]="1">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{row.starting_codon}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Stopping Codon" [flexGrow]="1">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{row.ending_codon}}
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>

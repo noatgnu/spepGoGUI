@@ -1,0 +1,128 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      SORF Browser
+    </div>
+    <div class="card-body">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6" *ngIf="refseqdb|async; let dbs">
+              <div class="form-group">
+                <label for="Database">Select DB:</label>
+                <select class="form-control" id="Database" [(ngModel)]="db">
+                  <option *ngFor="let d of dbs" [value]="d.ID">{{d.Name}} (v. {{d.Version}})</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" (click)="GetDBInfo()">Select</button>
+        </div>
+      </div>
+
+      <div class="card mt-4" *ngIf="selectedDB">
+        <div class="card-body">
+          <form [formGroup]="form">
+            <div class="row">
+              <div class="col-sm-6" *ngIf="organisms|async; let organims">
+                <div class="form-group">
+                  <label for="selectOrganism">Select organisms:</label>
+                  <select class="form-control" id="selectOrganism" formControlName="Organism">
+                    <option *ngFor="let organism of organims" [value]="organism.id">{{organism.name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-3"></div>
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-sm" (click)="GetOrganism(0)">Load All Organisms</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3" *ngIf="startingCodons|async; let startingCodons">
+                <div class="form-group">
+                  <label for="selectStartingCodon">Select Starting Codon:</label>
+                  <select class="form-control" id="selectStartingCodon" formControlName="Starting">
+                    <option *ngFor="let codon of startingCodons" [value]="codon.id">{{codon.sequence}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-3" *ngIf="endingCodons|async; let stoppingCodons">
+                <div class="form-group">
+                  <label for="selectStoppingCodon">Select Stopping Codon:</label>
+                  <select class="form-control" id="selectStoppingCodon" formControlName="Stopping">
+                    <option *ngFor="let codon of stoppingCodons" [value]="codon.id">{{codon.sequence}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="selectLimit">Select Max Query Return:</label>
+                  <select class="form-control" id="selectLimit" formControlName="Limit">
+                    <option value="0">No Limit</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="refseqname">Reference Sequence Name:</label>
+                    <input class="form-control" type="text" id="refseqname" formControlName="RefSeqName">
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-2">
+                <button class="btn" type="button" (click)="onSubmit()">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="sorfs|async; let sorfs">
+        <ngx-datatable
+          class="bootstrap"
+          [columnMode]="'flex'"
+          [headerHeight]="30"
+          [footerHeight]="30"
+          [limit]="20"
+          [rowHeight]="'auto'"
+          [rows]="sorfs">
+          <ngx-datatable-column name="Starting Codon" [flexGrow]="1">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{row.R.StartingCodon.sequence}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Starting Position" [flexGrow]="1">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{row.starting_position}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Stopping Codon" [flexGrow]="1">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{row.R.EndingCodon.sequence}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Stopping Position" [flexGrow]="1">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{row.ending_position}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Reference mRNA Name" [flexGrow]="1">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{row.R.RefSeqEntry.name}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Reference Organism" [flexGrow]="1">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{row.R.RefSeqEntry.R.Organism.name}}
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
+</div>
+
