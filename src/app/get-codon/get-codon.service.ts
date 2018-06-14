@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import {UpepCodon} from "../helper/upep-codon";
 import {Subject} from "rxjs/internal/Subject";
 import {HttpClient} from "@angular/common/http";
+import {BehaviorSubject} from "rxjs/internal/BehaviorSubject";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetCodonService {
-  private _refSeqCodonsSource = new Subject<UpepCodon[]>();
+  private _refSeqCodonsSource = new BehaviorSubject<UpepCodon[]>(null);
   refSeqCodonsReader = this._refSeqCodonsSource.asObservable();
 
-  private _refSeqStartingCodonsSource = new Subject<UpepCodon[]>();
+  private _refSeqStartingCodonsSource = new BehaviorSubject<UpepCodon[]>(null);
   refSeqStartingCodonsReader = this._refSeqStartingCodonsSource.asObservable();
 
-  private _refSeqStoppingCodonsSource = new Subject<UpepCodon[]>();
+  private _refSeqStoppingCodonsSource = new BehaviorSubject<UpepCodon[]>(null);
   refSeqStoppingCodonsReader = this._refSeqStoppingCodonsSource.asObservable();
   constructor(private httpClient: HttpClient) { }
 

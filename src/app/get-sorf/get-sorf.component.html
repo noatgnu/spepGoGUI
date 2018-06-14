@@ -42,7 +42,7 @@
                 <div class="form-group">
                   <label for="selectStartingCodon">Select Starting Codon:</label>
                   <select class="form-control" id="selectStartingCodon" formControlName="Starting">
-                    <option *ngFor="let codon of startingCodons" [value]="codon.id">{{codon.sequence}}</option>
+                    <option *ngFor="let codon of startingCodons" [value]="codon.id">{{codon.Seq}}</option>
                   </select>
                 </div>
               </div>
@@ -50,7 +50,7 @@
                 <div class="form-group">
                   <label for="selectStoppingCodon">Select Stopping Codon:</label>
                   <select class="form-control" id="selectStoppingCodon" formControlName="Stopping">
-                    <option *ngFor="let codon of stoppingCodons" [value]="codon.id">{{codon.sequence}}</option>
+                    <option *ngFor="let codon of stoppingCodons" [value]="codon.id">{{codon.Seq}}</option>
                   </select>
                 </div>
               </div>
@@ -92,7 +92,7 @@
           [rows]="sorfs">
           <ngx-datatable-column name="Starting Codon" [flexGrow]="1">
             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-              {{row.R.StartingCodon.sequence}}
+              {{row.R.StartingCodon.Seq}}
             </ng-template>
           </ngx-datatable-column>
           <ngx-datatable-column name="Starting Position" [flexGrow]="1">
@@ -102,7 +102,7 @@
           </ngx-datatable-column>
           <ngx-datatable-column name="Stopping Codon" [flexGrow]="1">
             <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-              {{row.R.EndingCodon.sequence}}
+              {{row.R.EndingCodon.Seq}}
             </ng-template>
           </ngx-datatable-column>
           <ngx-datatable-column name="Stopping Position" [flexGrow]="1">

@@ -17,10 +17,13 @@ import {HomeComponent} from "./home/home.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {GetCodonService} from "./get-codon/get-codon.service";
 import {GetOrganismService} from "./get-organism.service";
+import { SearchSorfComponent } from './search-sorf/search-sorf.component';
+import {GetBlastdbService} from "./get-blastdb.service";
 
 const appRoutes: Routes = [
   {path: "home", component: HomeComponent},
   {path: "admin", component: AdminComponent},
+  {path: "sorf", component: SearchSorfComponent},
 ];
 
 @NgModule({
@@ -31,6 +34,7 @@ const appRoutes: Routes = [
     GetCodonComponent,
     GetSorfComponent,
     HomeComponent,
+    SearchSorfComponent,
 
   ],
   imports: [
@@ -51,6 +55,7 @@ const appRoutes: Routes = [
     GetSorfService,
     GetCodonService,
     GetOrganismService,
+    GetBlastdbService,
     HttpClient
   ],
   bootstrap: [AppComponent]

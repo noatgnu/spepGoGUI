@@ -6,14 +6,15 @@ import {HttpClient} from "@angular/common/http";
 import {UpepCodon} from "../helper/upep-codon";
 import {UpepRefSeqDb} from "../helper/upep-ref-seq-db";
 import {FtpEntry} from "../helper/ftp-entry";
+import {BehaviorSubject} from "rxjs/internal/BehaviorSubject";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetRefSeqService {
-  private _refSeqNCBISource = new Subject<RefSeqQuery>();
+  private _refSeqNCBISource = new BehaviorSubject<RefSeqQuery>(null);
   RefSeqNCBIReader = this._refSeqNCBISource.asObservable();
-  private _regularDB = new Subject<UpepRefSeqDb[]>();
+  private _regularDB = new BehaviorSubject<UpepRefSeqDb[]>(null);
   regularDBReader = this._regularDB.asObservable();
 
   constructor(private httpClient: HttpClient) { }
