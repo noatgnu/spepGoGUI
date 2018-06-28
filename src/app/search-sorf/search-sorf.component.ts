@@ -10,6 +10,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {FastaFileService} from "../helper/fasta-file.service";
 import {Sequence} from "../helper/seq";
 import {SearchSorfService} from "./search-sorf.service";
+import {TblastxResult} from "../helper/tblastx-result";
 
 @Component({
   selector: 'app-search-sorf',
@@ -27,11 +28,14 @@ export class SearchSorfComponent implements OnInit {
   codonMap: Map<number, string> = new Map();
   form: FormGroup;
   sequences: Sequence[] = [];
+  results: Observable<Map<number, Map<string, TblastxResult>>>;
+  refseqdbMap: Map<number, UpepRefSeqDb>;
   constructor(private refseqDB: GetRefSeqService, private codonDB: GetCodonService, private blastDB: GetBlastdbService, private _fb: FormBuilder, private fastaFile: FastaFileService, private search: SearchSorfService) {
     this.codonStart = codonDB.refSeqStartingCodonsReader;
     this.codonEnd = codonDB.refSeqStoppingCodonsReader;
     this.refseqs = refseqDB.regularDBReader;
     this.bDB = blastDB.blastdbSourceReader;
+    this.results = this.search.resultReader;
   }
 
   ngOnInit() {
@@ -40,9 +44,13 @@ export class SearchSorfComponent implements OnInit {
       this.blastDB.UpdateBlastDB(data.body);
       for (const d of data.body) {
         this.avalabileRefSeqDB.push(d.upep_ref_seq_db_id);
+
       }
       this.refseqDB.GetLocalDBs().subscribe((data)=>{
         this.refseqDB.UpdateRegularDB(data.body);
+        for (const d of data.body) {
+          this.refseqdbMap.set(d.ID, d)
+        }
       });
     });
 
@@ -78,7 +86,7 @@ export class SearchSorfComponent implements OnInit {
 
   submit() {
     this.search.PostForm(this.form).subscribe((data)=>{
-
+      this.search.UpdateResult(data.body);
     })
   }
 }

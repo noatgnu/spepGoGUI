@@ -53,3 +53,19 @@
     </div>
   </div>
 </div>
+
+<div class="container" *ngIf="results|async; let results">
+  <div class="card">
+    <h6 class="card-header">Result</h6>
+    <div class="card-body">
+      <ngb-tabset>
+        <ngb-tab title="{{refseqdbMap.get(db.ID).Name}} ({{refseqdbMap.get(db.ID).Version}})">
+          <ng-template ngbTabContent>
+
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+
+</div>
