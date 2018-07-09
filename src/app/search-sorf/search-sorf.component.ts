@@ -11,6 +11,7 @@ import {FastaFileService} from "../helper/fasta-file.service";
 import {Sequence} from "../helper/seq";
 import {SearchSorfService} from "./search-sorf.service";
 import {TblastxResult} from "../helper/tblastx-result";
+import {TblastxQuery} from "../helper/tblastx-query";
 
 @Component({
   selector: 'app-search-sorf',
@@ -28,8 +29,9 @@ export class SearchSorfComponent implements OnInit {
   codonMap: Map<number, string> = new Map();
   form: FormGroup;
   sequences: Sequence[] = [];
-  results: Observable<Map<number, Map<string, TblastxResult>>>;
+  results: Observable<Map<number, Map<number, TblastxResult>>>;
   refseqdbMap: Map<number, UpepRefSeqDb>;
+  currentResult: TblastxQuery;
   constructor(private refseqDB: GetRefSeqService, private codonDB: GetCodonService, private blastDB: GetBlastdbService, private _fb: FormBuilder, private fastaFile: FastaFileService, private search: SearchSorfService) {
     this.codonStart = codonDB.refSeqStartingCodonsReader;
     this.codonEnd = codonDB.refSeqStoppingCodonsReader;
@@ -44,13 +46,17 @@ export class SearchSorfComponent implements OnInit {
       this.blastDB.UpdateBlastDB(data.body);
       for (const d of data.body) {
         this.avalabileRefSeqDB.push(d.upep_ref_seq_db_id);
-
       }
       this.refseqDB.GetLocalDBs().subscribe((data)=>{
+        this.refseqdbMap = new Map<number, UpepRefSeqDb>();
         this.refseqDB.UpdateRegularDB(data.body);
+        console.log(data.body);
         for (const d of data.body) {
-          this.refseqdbMap.set(d.ID, d)
+
+          this.refseqdbMap.set(d.ID, d);
+          console.log(d.Name);
         }
+        console.log(this.refseqdbMap)
       });
     });
 
@@ -88,5 +94,17 @@ export class SearchSorfComponent implements OnInit {
     this.search.PostForm(this.form).subscribe((data)=>{
       this.search.UpdateResult(data.body);
     })
+  }
+
+  checkIfHasResult(queries) {
+    let qu = 0;
+    for (const q of queries) {
+      if (q.Hits.length > 0) {
+        console.log(q.Hits.length);
+        qu ++;
+        break;
+      }
+    }
+    return qu
   }
 }

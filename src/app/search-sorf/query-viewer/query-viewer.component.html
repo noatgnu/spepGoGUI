@@ -1,0 +1,43 @@
+<div class="form-group row">
+  <button *ngFor="let q of Queries" (click)="currentQuery=q" class="btn btn-outline-info m-auto" [disabled]="!currentQueryMap.get(q)">{{q.QueryID}}</button>
+  <!--<label for="query" class="col-1 col-form-label col-form-label">
+    Query
+  </label>
+  <select id="query" class="col-6 form-control" [(ngModel)]="currentQuery">
+    <option *ngFor="let q of Queries" [ngValue]="q" [disabled]="currentQueryMap.get(q)">{{q.QueryID}}</option>
+  </select>-->
+</div>
+<div *ngIf="currentQuery">
+  <div class="card mb-3" *ngFor="let h of currentQuery.Hits">
+    <div class="card-body">
+      <h6 class="card-title">Hit Acc: {{h.Accession}}</h6>
+      <div>
+        <ul class="list-group">
+          <li class="list-group-item mt-1" *ngFor="let hsp of h.Hsps">
+            <div>
+              <p>
+                Bit Score: {{hsp.BitScore}}
+                Alignment Length: {{hsp.AlignLength}}
+                E-value: {{hsp.Evalue}}
+                Hit Frame: {{hsp.HitFrame}}
+              </p>
+            </div>
+            <div class="row">
+              <div class="col-1">
+                Target:
+              </div>
+              <div class="col-11">
+                {{hsp.LaganAlign.Target}}
+              </div>
+            </div>
+            <app-bar-chart [Alignment]="hsp.LaganAlign"></app-bar-chart>
+            <!--<app-alignment-viewer [Alignment]="hsp.LaganAlign"></app-alignment-viewer>-->
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

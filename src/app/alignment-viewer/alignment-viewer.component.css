@@ -1,0 +1,43 @@
+rect.bordered {
+  stroke: white;
+  stroke-width: 1px;
+}
+
+text.aa-residue {
+  fill:  #990000;
+}
+
+text.aaPositionText {
+  font-size: 5pt;
+  font-family: Consolas, courier;
+  fill: #aaa;
+}
+
+text.mono {
+  font-size: 5pt;
+  font-family: Consolas, courier;
+  fill: #aaa;
+}
+
+text.axis-workweek {
+  fill: #000;
+}
+
+text.axis-worktime {
+  fill: #000;
+}
+
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* aspect ratio */
+  vertical-align: top;
+  overflow: hidden;
+}
+.svg-content-responsive {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  left: 0;
+}

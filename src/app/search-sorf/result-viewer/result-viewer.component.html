@@ -1,0 +1,13 @@
+<div class="container">
+  <ngb-tabset type="pills" [activeId]="initActive">
+    <ngb-tab *ngFor="let c of BlastDB" [disabled]="!withResultMap.get(c)" id="{{''+CodonMap.get(Result.get(c).StartingCodonId)+CodonMap.get(Result.get(c).EndingCodonId)+c}}">
+      <ng-template ngbTabTitle>
+        {{CodonMap.get(Result.get(c).StartingCodonId) + ' - ' + CodonMap.get(Result.get(c).EndingCodonId)}}
+      </ng-template>
+      <ng-template ngbTabContent="">
+        <app-query-selector [Queries]="Result.get(c).Queries"></app-query-selector>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
+

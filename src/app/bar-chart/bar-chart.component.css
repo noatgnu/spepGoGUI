@@ -1,0 +1,12 @@
+.bottom-axis text{
+  font-size: 5pt;
+  font-family: Consolas, courier;
+  fill: #aaa;
+}
+
+.bartextLabel{
+  font-size: 10pt;
+  font-family: Consolas, courier;
+  fill: #6A1B9A;
+  overflow: visible;
+}

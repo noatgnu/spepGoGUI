@@ -1,7 +1,7 @@
-import {LaganAlign} from "./lagan-align";
+import {Lagan} from "./lagan";
 
 export class TblastxHsp {
-  constructor(AlignLength: number, BitScore: number, Evalue: number, Gaps: number, HitEndPosition: number, HitFrame: number, HitSeq: string, HitStartPosition: number, Identity: number, LaganAlign: LaganAlign, MidLine: string, Positive: number, QueryEndPosition: number, QueryFrame: number, QuerySeq: string, QueryStartPosition: number, Score: number) {
+  constructor(AlignLength: number, BitScore: number, Evalue: number, Gaps: number, HitEndPosition: number, HitFrame: number, HitSeq: string, HitStartPosition: number, Identity: number, LaganAlign: Lagan, MidLine: string, Positive: number, QueryEndPosition: number, QueryFrame: number, QuerySeq: string, QueryStartPosition: number, Score: number) {
     this.AlignLength = AlignLength;
     this.BitScore = BitScore;
     this.Evalue = Evalue;
@@ -29,7 +29,7 @@ export class TblastxHsp {
   HitSeq: string;
   HitStartPosition: number;
   Identity: number;
-  LaganAlign: LaganAlign;
+  LaganAlign: Lagan;
   MidLine: string;
   Positive: number;
   QueryEndPosition: number;

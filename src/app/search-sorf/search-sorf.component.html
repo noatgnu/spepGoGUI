@@ -9,7 +9,7 @@
           <div class="form-group">
             <label for="Database">Select DB:</label>
             <select class="form-control" id="Database" [(ngModel)]="db">
-              <option *ngFor="let d of dbs" [value]="d.ID" [disabled]="!checkIfAvailable(d.ID, avalabileRefSeqDB)">{{d.Name}}</option>
+              <option *ngFor="let d of dbs" [ngValue]="d" [disabled]="!checkIfAvailable(d.ID, avalabileRefSeqDB)">{{d.Name}}</option>
             </select>
           </div>
         </div>
@@ -54,18 +54,16 @@
   </div>
 </div>
 
-<div class="container" *ngIf="results|async; let results">
-  <div class="card">
-    <h6 class="card-header">Result</h6>
-    <div class="card-body">
-      <ngb-tabset>
-        <ngb-tab title="{{refseqdbMap.get(db.ID).Name}} ({{refseqdbMap.get(db.ID).Version}})">
-          <ng-template ngbTabContent>
-
-          </ng-template>
-        </ngb-tab>
-      </ngb-tabset>
+<div class="container mt-4" *ngIf="results|async; let results">
+  <hr>
+  <div class="card bg-light">
+    <div class="card-header">
+      Result
     </div>
-  </div>
+    <div class="card-body">
+      <h6 class="card-title">{{refseqdbMap.get(db.ID).Name}} (.v {{refseqdbMap.get(db.ID).Version}})</h6>
+      <app-result-viewer [BlastDB]="form.value['Blastdb']" [CodonMap]="codonMap" [Result]="results.get(db.ID)"></app-result-viewer>
+    </div>
 
+  </div>
 </div>

@@ -19,6 +19,12 @@ import {GetCodonService} from "./get-codon/get-codon.service";
 import {GetOrganismService} from "./get-organism.service";
 import { SearchSorfComponent } from './search-sorf/search-sorf.component';
 import {GetBlastdbService} from "./get-blastdb.service";
+import { QueryViewerComponent } from './search-sorf/query-viewer/query-viewer.component';
+import { ResultViewerComponent } from './search-sorf/result-viewer/result-viewer.component';
+import { AlignmentViewerComponent } from './alignment-viewer/alignment-viewer.component';
+import {D3Service} from "d3-ng2-service";
+import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { TblastxHitViewerComponent } from './tblastx-hit-viewer/tblastx-hit-viewer.component';
 
 const appRoutes: Routes = [
   {path: "home", component: HomeComponent},
@@ -35,6 +41,11 @@ const appRoutes: Routes = [
     GetSorfComponent,
     HomeComponent,
     SearchSorfComponent,
+    QueryViewerComponent,
+    ResultViewerComponent,
+    AlignmentViewerComponent,
+    BarChartComponent,
+    TblastxHitViewerComponent,
 
   ],
   imports: [
@@ -51,6 +62,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
+    D3Service,
     GetRefSeqService,
     GetSorfService,
     GetCodonService,
