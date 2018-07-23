@@ -25,6 +25,7 @@ import { AlignmentViewerComponent } from './alignment-viewer/alignment-viewer.co
 import {D3Service} from "d3-ng2-service";
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { TblastxHitViewerComponent } from './tblastx-hit-viewer/tblastx-hit-viewer.component';
+import { SequenceViewerComponent } from './sequence-viewer/sequence-viewer.component';
 
 const appRoutes: Routes = [
   {path: "home", component: HomeComponent},
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
     AlignmentViewerComponent,
     BarChartComponent,
     TblastxHitViewerComponent,
+    SequenceViewerComponent,
 
   ],
   imports: [

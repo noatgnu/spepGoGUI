@@ -4,7 +4,7 @@
       <ng-template ngbTabTitle>
         {{CodonMap.get(Result.get(c).StartingCodonId) + ' - ' + CodonMap.get(Result.get(c).EndingCodonId)}}
       </ng-template>
-      <ng-template ngbTabContent="">
+      <ng-template ngbTabContent>
         <app-query-selector [Queries]="Result.get(c).Queries"></app-query-selector>
       </ng-template>
     </ngb-tab>
