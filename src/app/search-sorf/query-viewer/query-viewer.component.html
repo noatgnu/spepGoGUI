@@ -11,8 +11,14 @@
   <div class="card mb-3" *ngFor="let h of currentQuery.Hits">
     <div class="card-body">
       <h6 class="card-title">Hit Acc: {{h.Accession}}</h6>
+      <div class="container">
+        <app-sequence-viewer [Sequence]="h.Seq" [GridSize]="gridSize" [Colors]="colors" [Frames]="GetHitFrameData(h.Hsps)"></app-sequence-viewer>
+      </div>
+
       <div>
-        <ul class="list-group">
+
+        <!--<ul class="list-group">
+
           <li class="list-group-item mt-1" *ngFor="let hsp of h.Hsps">
             <div>
               <p>
@@ -31,9 +37,9 @@
               </div>
             </div>
             <app-bar-chart [Alignment]="hsp.LaganAlign"></app-bar-chart>
-            <!--<app-alignment-viewer [Alignment]="hsp.LaganAlign"></app-alignment-viewer>-->
+            &lt;!&ndash;<app-alignment-viewer [Alignment]="hsp.LaganAlign"></app-alignment-viewer>&ndash;&gt;
           </li>
-        </ul>
+        </ul>-->
       </div>
     </div>
   </div>

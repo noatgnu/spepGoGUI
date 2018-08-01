@@ -1,0 +1,34 @@
+/deep/ .bottom-axis text{
+  font-size: 5pt;
+  font-family: Consolas, courier;
+  fill: #aaa;
+}
+
+/deep/ .bar-chart-legend-text {
+  font-size: 10pt;
+  font-family: Consolas, courier;
+}
+
+/deep/ .frame-text {
+  font-size: 10pt;
+  font-family: Consolas, courier;
+}
+
+/deep/ .axis text{
+  font-size: 10pt;
+  font-family: Consolas, courier;
+  fill: #aaa;
+}
+
+/deep/ .axis path, .axis line{
+  fill: none;
+  stroke-width: 1px;
+  stroke: black;
+}
+
+/deep/ .bartextLabel{
+  font-size: 10pt;
+  font-family: Consolas, courier;
+  fill: #6A1B9A;
+  overflow: visible;
+}

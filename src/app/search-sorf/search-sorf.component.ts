@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {GetRefSeqService} from "../get-sorf/get-refseq.service";
 import {GetCodonService} from "../get-codon/get-codon.service";
 import {GetBlastdbService} from "../get-blastdb.service";
@@ -12,6 +12,11 @@ import {Sequence} from "../helper/seq";
 import {SearchSorfService} from "./search-sorf.service";
 import {TblastxResult} from "../helper/tblastx-result";
 import {TblastxQuery} from "../helper/tblastx-query";
+import {PopupService} from "./popup.service";
+import {Subscription} from "rxjs";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {HeatmapPopupComponent} from "./heatmap-popup/heatmap-popup.component";
+import {Lagan} from "../helper/lagan";
 
 @Component({
   selector: 'app-search-sorf',
@@ -19,7 +24,7 @@ import {TblastxQuery} from "../helper/tblastx-query";
   styleUrls: ['./search-sorf.component.css'],
   providers: [FastaFileService,]
 })
-export class SearchSorfComponent implements OnInit {
+export class SearchSorfComponent implements OnInit, OnDestroy {
   codonStart: Observable<UpepCodon[]>;
   codonEnd: Observable<UpepCodon[]>;
   refseqs: Observable<UpepRefSeqDb[]>;
@@ -32,12 +37,18 @@ export class SearchSorfComponent implements OnInit {
   results: Observable<Map<number, Map<number, TblastxResult>>>;
   refseqdbMap: Map<number, UpepRefSeqDb>;
   currentResult: TblastxQuery;
-  constructor(private refseqDB: GetRefSeqService, private codonDB: GetCodonService, private blastDB: GetBlastdbService, private _fb: FormBuilder, private fastaFile: FastaFileService, private search: SearchSorfService) {
+
+  popUp: Subscription;
+  constructor(private refseqDB: GetRefSeqService, private codonDB: GetCodonService, private blastDB: GetBlastdbService, private _fb: FormBuilder, private fastaFile: FastaFileService, private search: SearchSorfService, private _popUp: PopupService, private modalService: NgbModal) {
     this.codonStart = codonDB.refSeqStartingCodonsReader;
     this.codonEnd = codonDB.refSeqStoppingCodonsReader;
     this.refseqs = refseqDB.regularDBReader;
     this.bDB = blastDB.blastdbSourceReader;
     this.results = this.search.resultReader;
+  }
+
+  ngOnDestroy() {
+    this.popUp.unsubscribe();
   }
 
   ngOnInit() {
@@ -66,7 +77,14 @@ export class SearchSorfComponent implements OnInit {
         this.codonMap.set(c.id, c.sequence);
       }
     });
+    this.popUp = this._popUp.popupReader.subscribe((data)=> {
+      this.openPopUp(data);
+    })
+  }
 
+  openPopUp(Alignment: Lagan) {
+    const modalRef = this.modalService.open(HeatmapPopupComponent, { size: 'lg' });
+    modalRef.componentInstance.Alignment = Alignment;
   }
 
   createForm(){

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { AdminComponent } from './admin/admin.component';
 import { GetRefseqStatusComponent } from './admin/get-refseq-status/get-refseq-status.component';
 import {GetRefSeqService} from "./get-sorf/get-refseq.service";
@@ -26,6 +26,9 @@ import {D3Service} from "d3-ng2-service";
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { TblastxHitViewerComponent } from './tblastx-hit-viewer/tblastx-hit-viewer.component';
 import { SequenceViewerComponent } from './sequence-viewer/sequence-viewer.component';
+import {BarGraphService} from "./bar-graph.service";
+import { HeatmapPopupComponent } from './search-sorf/heatmap-popup/heatmap-popup.component';
+import {PopupService} from "./search-sorf/popup.service";
 
 const appRoutes: Routes = [
   {path: "home", component: HomeComponent},
@@ -48,7 +51,7 @@ const appRoutes: Routes = [
     BarChartComponent,
     TblastxHitViewerComponent,
     SequenceViewerComponent,
-
+    HeatmapPopupComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -64,13 +67,19 @@ const appRoutes: Routes = [
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
+    BarGraphService,
+    PopupService,
     D3Service,
     GetRefSeqService,
     GetSorfService,
     GetCodonService,
     GetOrganismService,
     GetBlastdbService,
-    HttpClient
+    HttpClient,
+    NgbActiveModal
+  ],
+  entryComponents: [
+    HeatmapPopupComponent
   ],
   bootstrap: [AppComponent]
 })
